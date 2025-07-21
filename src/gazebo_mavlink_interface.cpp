@@ -846,9 +846,14 @@ void GazeboMavlinkInterface::Gps2Callback(GpsPtr& gps_msg) {
   gps2_raw_msg.eph = gps_msg->eph() * 100.0;
   gps2_raw_msg.epv = gps_msg->epv() * 100.0;
   gps2_raw_msg.vel = gps_msg->velocity() * 100.0;
-  ignition::math::Angle cog(atan2(gps_msg->velocity_east(), gps_msg->velocity_north()));
-  cog.Normalize();
-  gps2_raw_msg.cog = static_cast<uint16_t>(GetDegrees360(cog) * 100.0);
+
+  ignition::math::Quaterniond q_gr = model_->WorldPose().Rot();
+  ignition::math::Quaterniond q_nb = q_ng * q_gr * q_ng.Inverse();
+  ignition::math::Angle yaw(q_nb.Euler().Z());
+  yaw.Normalize();
+
+  // NOTE: Use the cog field to send yaw, since we are more interested in that
+  gps2_raw_msg.cog = static_cast<uint16_t>(GetDegrees360(yaw) * 100.0);
   gps2_raw_msg.satellites_visible = 10;
 
   // send GPS2_RAW Mavlink msg
