@@ -53,6 +53,7 @@ void GazeboMavlinkInterface::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf
       motor_velocity_reference_pub_topic_);
   getSdfParam<std::string>(_sdf, "imuSubTopic", imu_sub_topic_, imu_sub_topic_);
   getSdfParam<std::string>(_sdf, "gpsSubTopic", gps_sub_topic_, gps_sub_topic_);
+  getSdfParam<std::string>(_sdf, "gps2SubTopic", gps2_sub_topic_, gps2_sub_topic_);
   getSdfParam<std::string>(_sdf, "visionSubTopic", vision_sub_topic_, vision_sub_topic_);
   getSdfParam<std::string>(_sdf, "lidarSubTopic", lidar_sub_topic_, lidar_sub_topic_);
   getSdfParam<std::string>(_sdf, "opticalFlowSubTopic",
@@ -275,6 +276,7 @@ void GazeboMavlinkInterface::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf
   sonar_sub_ = node_handle_->Subscribe("~/" + model_->GetName() + sonar_sub_topic_, &GazeboMavlinkInterface::SonarCallback, this);
   irlock_sub_ = node_handle_->Subscribe("~/" + model_->GetName() + irlock_sub_topic_, &GazeboMavlinkInterface::IRLockCallback, this);
   gps_sub_ = node_handle_->Subscribe("~/" + model_->GetName() + gps_sub_topic_, &GazeboMavlinkInterface::GpsCallback, this);
+  gps2_sub_ = node_handle_->Subscribe("~/" + model_->GetName() + gps2_sub_topic_, &GazeboMavlinkInterface::Gps2Callback, this);
   groundtruth_sub_ = node_handle_->Subscribe("~/" + model_->GetName() + groundtruth_sub_topic_, &GazeboMavlinkInterface::GroundtruthCallback, this);
   vision_sub_ = node_handle_->Subscribe("~/" + model_->GetName() + vision_sub_topic_, &GazeboMavlinkInterface::VisionCallback, this);
   mag_sub_ = node_handle_->Subscribe("~/" + model_->GetName() + mag_sub_topic_, &GazeboMavlinkInterface::MagnetometerCallback, this);
@@ -830,6 +832,29 @@ void GazeboMavlinkInterface::GpsCallback(GpsPtr& gps_msg) {
     mavlink_msg_hil_gps_encode_chan(1, 200, MAVLINK_COMM_0, &msg, &hil_gps_msg);
     send_mavlink_message(&msg);
   }
+}
+
+void GazeboMavlinkInterface::Gps2Callback(GpsPtr& gps_msg) {
+  // fill GPS2_RAW Mavlink msg
+
+  mavlink_gps2_raw_t gps2_raw_msg = {};
+  gps2_raw_msg.time_usec = gps_msg->time_usec();
+  gps2_raw_msg.fix_type = 3;
+  gps2_raw_msg.lat = gps_msg->latitude_deg() * 1e7;
+  gps2_raw_msg.lon = gps_msg->longitude_deg() * 1e7;
+  gps2_raw_msg.alt = gps_msg->altitude() * 1000.0;
+  gps2_raw_msg.eph = gps_msg->eph() * 100.0;
+  gps2_raw_msg.epv = gps_msg->epv() * 100.0;
+  gps2_raw_msg.vel = gps_msg->velocity() * 100.0;
+  ignition::math::Angle cog(atan2(gps_msg->velocity_east(), gps_msg->velocity_north()));
+  cog.Normalize();
+  gps2_raw_msg.cog = static_cast<uint16_t>(GetDegrees360(cog) * 100.0);
+  gps2_raw_msg.satellites_visible = 10;
+
+  // send GPS2_RAW Mavlink msg
+  mavlink_message_t msg;
+  mavlink_msg_gps2_raw_encode_chan(1, 200, MAVLINK_COMM_0, &msg, &gps2_raw_msg);
+  send_mavlink_message(&msg);
 }
 
 void GazeboMavlinkInterface::GroundtruthCallback(GtPtr& groundtruth_msg) {

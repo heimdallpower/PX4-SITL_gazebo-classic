@@ -67,6 +67,7 @@ private:
   std::normal_distribution<float> standard_normal_distribution_;
 
   bool gps_noise_;
+  std::string gps_topic_;
 
   physics::ModelPtr model_;
   physics::WorldPtr world_;

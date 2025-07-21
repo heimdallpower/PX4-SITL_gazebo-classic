@@ -125,11 +125,12 @@
   </xacro:macro>
 
   <!-- Macro to add the gps_plugin. -->
-  <xacro:macro name="gps_plugin_macro" params="namespace gps_noise">
+  <xacro:macro name="gps_plugin_macro" params="namespace gps_noise gps_topic">
     <gazebo>
       <plugin name="gps_plugin" filename="libgazebo_gps_plugin.so">
         <robotNamespace>${namespace}</robotNamespace>
         <gpsNoise>${gps_noise}</gpsNoise>
+        <gpsTopic>${gps_topic}</gpsTopic>
       </plugin>
     </gazebo>
   </xacro:macro>
@@ -160,12 +161,13 @@
   </xacro:macro>
 
   <!-- Macro to add the mavlink interface. -->
-  <xacro:macro name="mavlink_interface_macro" params="namespace imu_sub_topic gps_sub_topic mag_sub_topic baro_sub_topic mavlink_addr mavlink_udp_port mavlink_tcp_port serial_enabled serial_device baudrate qgc_addr qgc_udp_port sdk_addr sdk_udp_port hil_mode hil_state_level vehicle_is_tailsitter send_vision_estimation send_odometry enable_lockstep use_tcp">
+  <xacro:macro name="mavlink_interface_macro" params="namespace imu_sub_topic gps_sub_topic gps2_sub_topic mag_sub_topic baro_sub_topic mavlink_addr mavlink_udp_port mavlink_tcp_port serial_enabled serial_device baudrate qgc_addr qgc_udp_port sdk_addr sdk_udp_port hil_mode hil_state_level vehicle_is_tailsitter send_vision_estimation send_odometry enable_lockstep use_tcp">
     <gazebo>
       <plugin name="mavlink_interface" filename="libgazebo_mavlink_interface.so">
         <robotNamespace>${namespace}</robotNamespace>
         <imuSubTopic>${imu_sub_topic}</imuSubTopic>
         <gpsSubTopic>${gps_sub_topic}</gpsSubTopic>
+        <gps2SubTopic>${gps2_sub_topic}</gps2SubTopic>
         <magSubTopic>${mag_sub_topic}</magSubTopic>
         <baroSubTopic>${baro_sub_topic}</baroSubTopic>
         <mavlink_addr>$(arg mavlink_addr)</mavlink_addr>

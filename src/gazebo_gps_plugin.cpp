@@ -63,6 +63,8 @@ void GpsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
     gps_noise_ = false;
   }
 
+  getSdfParam<std::string>(_sdf, "gpsTopic", gps_topic_, "/gps");
+
   if (env_lat) {
     gzmsg << "Home latitude is set to " << env_lat << ".\n";
     lat_home = std::stod(env_lat) * M_PI / 180.0;
@@ -92,7 +94,7 @@ void GpsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
   gravity_W_ = world_->Gravity();
 
-  gps_pub_ = node_handle_->Advertise<sensor_msgs::msgs::SITLGps>("~/" + model_->GetName() + "/gps", 10);
+  gps_pub_ = node_handle_->Advertise<sensor_msgs::msgs::SITLGps>("~/" + model_->GetName() + gps_topic_, 10);
   gt_pub_ = node_handle_->Advertise<sensor_msgs::msgs::Groundtruth>("~/" + model_->GetName() + "/groundtruth", 10);
 }
 

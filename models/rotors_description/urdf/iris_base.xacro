@@ -54,6 +54,15 @@
   <xacro:gps_plugin_macro
     namespace="${namespace}"
     gps_noise="true"
+    gps_topic="/gps"
+    >
+  </xacro:gps_plugin_macro>
+
+  <!-- Instantiate gps2 plugin. -->
+  <xacro:gps_plugin_macro
+    namespace="${namespace}"
+    gps_noise="true"
+    gps_topic="/gps2"
     >
   </xacro:gps_plugin_macro>
 
@@ -82,6 +91,7 @@
     namespace="${namespace}"
     imu_sub_topic="/imu"
     gps_sub_topic="/gps"
+    gps2_sub_topic="/gps2"
     mag_sub_topic="/mag"
     baro_sub_topic="/baro"
     mavlink_addr="$(arg mavlink_addr)"
