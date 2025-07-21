@@ -131,6 +131,13 @@
         <robotNamespace>${namespace}</robotNamespace>
         <gpsNoise>${gps_noise}</gpsNoise>
         <gpsTopic>${gps_topic}</gpsTopic>
+        <gpsCorellationTime>${gps_corellation_time}</gpsCorellationTime>
+        <gpsXYRandomWalk>${gps_xy_random_walk}</gpsXYRandomWalk>
+        <gpsZRandomWalk>${gps_z_random_walk}</gpsZRandomWalk>
+        <gpsXYNoiseDensity>${gps_xy_noise_density}</gpsXYNoiseDensity>
+        <gpsZNoiseDensity>${gps_z_noise_density}</gpsZNoiseDensity>
+        <gpsVXYNoiseDensity>${gps_vxy_noise_density}</gpsVXYNoiseDensity>
+        <gpsVZNoiseDensity>${gps_vz_noise_density}</gpsVZNoiseDensity>
       </plugin>
     </gazebo>
   </xacro:macro>

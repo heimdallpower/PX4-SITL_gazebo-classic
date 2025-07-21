@@ -63,6 +63,13 @@
     namespace="${namespace}"
     gps_noise="true"
     gps_topic="/gps2"
+    gps_corellation_time="60.0"
+    gps_xy_random_walk="0.2"
+    gps_z_random_walk="0.4"
+    gps_xy_noise_density="0.00002"
+    gps_z_noise_density="0.00004"
+    gps_vxy_noise_density="0.02"
+    gps_vz_noise_density="0.04"
     >
   </xacro:gps_plugin_macro>
 
