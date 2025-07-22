@@ -205,4 +205,9 @@
     </xacro:bag_plugin_macro>
   </xacro:if>
 
+  <xacro:gazebo_ros_imu_sensor_macro
+    namespace="${namespace}"
+    frame_id="base_link"
+  >
+  </xacro:gazebo_ros_imu_sensor_macro>
 </robot>

@@ -613,4 +613,12 @@
     </xacro:imu_plugin_macro>
   </xacro:macro>
 
+  <xacro:macro name="gazebo_ros_imu_sensor_macro" params="namespace frame_id">
+    <gazebo>
+      <plugin name="gazebo_ros_imu_sensor" filename="libgazebo_ros_imu_sensor.so">
+        <robotNamespace>${namespace}</robotNamespace>
+        <frameName>${frame_id}</frameName>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
 </robot>
