@@ -125,7 +125,7 @@
   </xacro:macro>
 
   <!-- Macro to add the gps_plugin. -->
-  <xacro:macro name="gps_plugin_macro" params="namespace gps_noise gps_topic">
+  <xacro:macro name="gps_plugin_macro" params="namespace gps_noise gps_topic gps_corellation_time gps_xy_random_walk gps_z_random_walk gps_xy_noise_density gps_z_noise_density gps_vxy_noise_density gps_vz_noise_density">
     <gazebo>
       <plugin name="gps_plugin" filename="libgazebo_gps_plugin.so">
         <robotNamespace>${namespace}</robotNamespace>
