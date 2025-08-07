@@ -63,15 +63,6 @@ void GpsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
     gps_noise_ = false;
   }
 
-  getSdfParam<double>(_sdf, "gpsCorellationTime", gps_corellation_time, gps_corellation_time);
-  getSdfParam<double>(_sdf, "gpsXYRandomWalk", gps_xy_random_walk, gps_xy_random_walk);
-  getSdfParam<double>(_sdf, "gpsZRandomWalk", gps_z_random_walk, gps_z_random_walk);
-  getSdfParam<double>(_sdf, "gpsXYNoiseDensity", gps_xy_noise_density, gps_xy_noise_density);
-  getSdfParam<double>(_sdf, "gpsZNoiseDensity", gps_z_noise_density, gps_z_noise_density);
-  getSdfParam<double>(_sdf, "gpsVXYNoiseDensity", gps_vxy_noise_density, gps_vxy_noise_density);
-  getSdfParam<double>(_sdf, "gpsVZNoiseDensity", gps_vz_noise_density, gps_vz_noise_density);
-  getSdfParam<std::string>(_sdf, "gpsTopic", gps_topic_, "/gps");
-
   if (env_lat) {
     gzmsg << "Home latitude is set to " << env_lat << ".\n";
     lat_home = std::stod(env_lat) * M_PI / 180.0;
@@ -101,7 +92,7 @@ void GpsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
   gravity_W_ = world_->Gravity();
 
-  gps_pub_ = node_handle_->Advertise<sensor_msgs::msgs::SITLGps>("~/" + model_->GetName() + gps_topic_, 10);
+  gps_pub_ = node_handle_->Advertise<sensor_msgs::msgs::SITLGps>("~/" + model_->GetName() + "/gps", 10);
   gt_pub_ = node_handle_->Advertise<sensor_msgs::msgs::Groundtruth>("~/" + model_->GetName() + "/groundtruth", 10);
 }
 

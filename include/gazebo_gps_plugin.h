@@ -67,7 +67,6 @@ private:
   std::normal_distribution<float> standard_normal_distribution_;
 
   bool gps_noise_;
-  std::string gps_topic_;
 
   physics::ModelPtr model_;
   physics::WorldPtr world_;
@@ -120,13 +119,13 @@ private:
   double std_z;     // meters
   std::default_random_engine rand_;
   std::normal_distribution<float> randn_;
-  double gps_corellation_time = 60.0;    // s
-  double gps_xy_random_walk = 2.0;       // (m/s) / sqrt(hz)
-  double gps_z_random_walk = 4.0;        // (m/s) / sqrt(hz)
-  double gps_xy_noise_density = 2e-4;    // (m) / sqrt(hz)
-  double gps_z_noise_density = 4e-4;     // (m) / sqrt(hz)
-  double gps_vxy_noise_density = 2e-1;   // (m/s) / sqrt(hz)
-  double gps_vz_noise_density = 4e-1;    // (m/s) / sqrt(hz)
+  static constexpr double gps_corellation_time = 60.0;    // s
+  static constexpr double gps_xy_random_walk = 2.0;       // (m/s) / sqrt(hz)
+  static constexpr double gps_z_random_walk = 4.0;        // (m/s) / sqrt(hz)
+  static constexpr double gps_xy_noise_density = 2e-4;    // (m) / sqrt(hz)
+  static constexpr double gps_z_noise_density = 4e-4;     // (m) / sqrt(hz)
+  static constexpr double gps_vxy_noise_density = 2e-1;   // (m/s) / sqrt(hz)
+  static constexpr double gps_vz_noise_density = 4e-1;    // (m/s) / sqrt(hz)
 };     // class GAZEBO_VISIBLE GpsPlugin
 }      // namespace gazebo
 #endif // _GAZEBO_GPS_PLUGIN_HH_

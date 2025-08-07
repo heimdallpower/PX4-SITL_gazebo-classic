@@ -54,29 +54,6 @@
   <xacro:gps_plugin_macro
     namespace="${namespace}"
     gps_noise="true"
-    gps_topic="/gps"
-    gps_corellation_time="60.0"
-    gps_xy_random_walk="2.0"
-    gps_z_random_walk="4.0"
-    gps_xy_noise_density="0.0002"
-    gps_z_noise_density="0.0004"
-    gps_vxy_noise_density="0.2"
-    gps_vz_noise_density="0.4"
-    >
-  </xacro:gps_plugin_macro>
-
-  <!-- Instantiate gps2 plugin. -->
-  <xacro:gps_plugin_macro
-    namespace="${namespace}"
-    gps_noise="true"
-    gps_topic="/gps2"
-    gps_corellation_time="60.0"
-    gps_xy_random_walk="0.2"
-    gps_z_random_walk="0.4"
-    gps_xy_noise_density="0.00002"
-    gps_z_noise_density="0.00004"
-    gps_vxy_noise_density="0.02"
-    gps_vz_noise_density="0.04"
     >
   </xacro:gps_plugin_macro>
 
@@ -105,7 +82,6 @@
     namespace="${namespace}"
     imu_sub_topic="/imu"
     gps_sub_topic="/gps"
-    gps2_sub_topic="/gps2"
     mag_sub_topic="/mag"
     baro_sub_topic="/baro"
     mavlink_addr="$(arg mavlink_addr)"
@@ -212,9 +188,4 @@
     </xacro:bag_plugin_macro>
   </xacro:if>
 
-  <xacro:gazebo_ros_imu_sensor_macro
-    namespace="${namespace}"
-    frame_id="base_link"
-  >
-  </xacro:gazebo_ros_imu_sensor_macro>
 </robot>
