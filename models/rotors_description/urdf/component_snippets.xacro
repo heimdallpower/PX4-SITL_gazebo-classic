@@ -604,4 +604,12 @@
     </xacro:imu_plugin_macro>
   </xacro:macro>
 
+  <xacro:macro name="gazebo_ros_rtk_helper_plugin_macro" params="namespace body_frame">
+    <gazebo>
+      <plugin name="gazebo_ros_rtk_helper" filename="libgazebo_ros_rtk_helper.so">
+        <robotNamespace>${namespace}</robotNamespace>
+        <bodyFrame>${body_frame}</bodyFrame>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
 </robot>

@@ -188,4 +188,9 @@
     </xacro:bag_plugin_macro>
   </xacro:if>
 
+  <xacro:gazebo_ros_rtk_helper_plugin_macro
+    namespace="${namespace}"
+    body_frame="base_link"
+  >
+  </xacro:gazebo_ros_rtk_helper_plugin_macro>
 </robot>
